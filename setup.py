@@ -15,6 +15,6 @@ setup(
     url='https://github.com/zacwitte/HyperLogLogDB',
     license='LGPL',
     description='A disk-based database of HyperLogLog data structures for estimating cardinality of many distinct sets',
-    long_description=long_description=open('README.md').read(),
+    long_description=open('README.md').read(),
     install_requires=['numpy']
 )
