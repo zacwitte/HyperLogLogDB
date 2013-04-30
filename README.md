@@ -1,12 +1,19 @@
 # HyperLogLogDB
 
-A disk-backed database of HyperLogLog data structures for estimating
+A disk-backed in-memory database of HyperLogLog data structures for estimating
 cardinality of many distinct sets. It uses memory mapped files to keep
-recently used data in cache and let's the OS layer move data between disk
-and memory. It requires the numpy library to do more efficient merges of sets.
+recently used data in memory and let's the OS layer sync data between disk
+and memory as space allows. A
+[HyperLogLog](http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.142.9475)
+is a near-optimal cardinality estimation algorithm. I built this key-value
+style database to facilitate a need we have at [pubnub](http://pubnub.com)
+for tracking continuously growing sets for each customer for each granular
+period of time. HyperLogLog's ability to add values and estimate in
+cardinality in constant time and memory is essential. Sparse data sets also
+compress quite well.
 
-This library contains a modified version of the implementation by Vasiliy Evseenko
-<https://github.com/svpcom/hyperloglog>
+This library contains a modified version of the HyperLogLog implementation
+by Vasiliy Evseenko: <https://github.com/svpcom/hyperloglog>
 
 The original description of the HyperLogLog data structure can be found here:
 <http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.76.4286>
@@ -64,7 +71,7 @@ A module abstracting a slice of a larger memory mapped file (python `mmap`)
  * **offset** - offset in bytes from the start of the _mmap_file_
 
 > #### count( _val_ )
-> Returns the number of occurances of val in the slice
+> Returns the number of occurrences of val in the slice
 >
 > * **val** - a byte to search for
 
